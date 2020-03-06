@@ -1,2 +1,2 @@
 # scripts-bgt
-Aqui serão colocados alguns scripts, desenvovlidos e alterados por mim, na linguagem BGT.
+Aqui serão colocados alguns scripts, desenvolvidos e alterados por mim, na linguagem BGT.
