@@ -1,0 +1,68 @@
+#include "sound_pool.bgt"
+sound_pool p;
+int compasso=2, ncompasso=2, bpm=100;
+bool tocando=true;
+timer t;
+void main(){
+show_game_window("metrônomo acessível");
+while(true){
+wait(5);
+teclas();
+if(t.elapsed>60000/bpm&&tocando){
+if(ncompasso!=compasso){
+p.play_stationary("click.wav", false, false);
+ncompasso++;
+}
+else
+{
+p.play_stationary("clock.wav", false, false);
+ncompasso=1;
+}
+t.restart();
+}
+}
+}
+void fale(string msg){
+screen_reader_speak(NVDA, msg);
+}
+void teclas(){
+if(key_pressed(KEY_ESCAPE))exit();
+if(key_pressed(KEY_LEFT)&&compasso>2){
+compasso--;
+fale(compasso);
+}
+if(key_pressed(KEY_RIGHT)){
+compasso++;
+fale(compasso);
+}
+if(key_pressed(KEY_UP)&&bpm<200){
+bpm++;
+fale(bpm);
+}
+if(key_pressed(KEY_DOWN)&&bpm>0){
+bpm--;
+fale(bpm);
+}
+if(key_pressed(KEY_PRIOR)&&bpm<200){
+bpm+=10;
+fale(bpm);
+}
+if(key_pressed(KEY_NEXT)&&bpm>0){
+bpm-=10;
+fale(bpm);
+}
+if(key_pressed(KEY_C))fale(compasso);
+if(key_pressed(KEY_B))fale(bpm);
+if(key_pressed(KEY_SPACE)){
+if(tocando==true){
+tocando=false;
+t.pause();
+fale("Pausado");
+}
+else{
+tocando=true;
+t.resume();
+fale("Retomado");
+}
+}
+}
